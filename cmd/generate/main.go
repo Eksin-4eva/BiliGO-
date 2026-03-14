@@ -3,15 +3,23 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"github.com/BiliGO/biz/dal/model"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gen"
 	"gorm.io/gorm"
 )
 
 func main() {
-	// 连接数据库（运行前替换 DSN）
-	db, err := gorm.Open(mysql.Open("root:password@tcp(127.0.0.1:3306)/biligo?charset=utf8mb4&parseTime=True&loc=Local"))
+	_ = godotenv.Load()
+	dsn := os.Getenv("MYSQL_DSN")
+	if dsn == "" {
+		log.Fatal("MYSQL_DSN is required")
+	}
+	db, err := gorm.Open(mysql.Open(dsn))
 	if err != nil {
 		panic(err)
 	}
