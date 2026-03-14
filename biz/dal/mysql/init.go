@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/BiliGO/biz/dal/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -36,5 +37,16 @@ func Init(cfg *Config) error {
 	sqlDB.SetConnMaxLifetime(cfg.ConnMaxLifetime)
 
 	DB = db
-	return nil
+
+	return autoMigrate(db)
+}
+
+func autoMigrate(db *gorm.DB) error {
+	return db.AutoMigrate(
+		&model.User{},
+		&model.Video{},
+		&model.Comment{},
+		&model.Favorite{},
+		&model.Relation{},
+	)
 }
