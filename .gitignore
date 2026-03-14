@@ -40,4 +40,6 @@ api.thrift
 interfaces.md
 1.py 
 
-		  
+
+# 环境变量（含敏感信息，不提交）
+.env
